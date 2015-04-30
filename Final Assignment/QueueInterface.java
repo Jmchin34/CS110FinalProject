@@ -7,6 +7,7 @@
 
 public interface QueueInterface 
 {
+
   /** Determines whether a queue is empty.
       @returns true if the queue is empty; otherwise returns false.
   */
@@ -34,4 +35,5 @@ public interface QueueInterface
       @throws QueueException if the operation is impossible
   */
   public Object peek() throws QueueException;
-}  // end QueueInterface
+
+}

@@ -8,25 +8,29 @@
 public class QueueReferenceBased  implements QueueInterface
 {
    private Node lastNode;
+   private int size;
 
+   /**No-arg constructor
+   */
    public QueueReferenceBased() 
    {
       lastNode = null;
-   }  
-   
+   }
+     
    /** Determines whether a queue is empty.
        @returns true if the queue is empty; otherwise returns false.
    */
    public boolean isEmpty() 
    {
       return lastNode == null;
-   }
-     
+   }  
+  
    /** Removes all items of a queue.
    */
    public void dequeueAll() 
    {
       lastNode = null;
+      size = 0;
    }  
   
    /** Adds an item at the back of a queue.
@@ -36,6 +40,7 @@ public class QueueReferenceBased  implements QueueInterface
    public void enqueue(Object newItem) 
    {
       Node newNode = new Node(newItem);
+      size = size + 1;
 
       // insert the new node
       if (isEmpty()) 
@@ -63,30 +68,30 @@ public class QueueReferenceBased  implements QueueInterface
       if (!isEmpty()) 
       {
          // queue is not empty; remove front
+         size = size - 1;
          Node firstNode = lastNode.getNext();
-         if (firstNode == lastNode) 
-         { // special case?
+         if (firstNode == lastNode) { // special case?
             lastNode = null;           // yes, one node in queue
-         }
-         else 
-         {
-            lastNode.setNext(firstNode.getNext());
-         }  
-         return firstNode.getItem();
+      }
+      else 
+      {
+        lastNode.setNext(firstNode.getNext());
+      }  
+      return firstNode.getItem();
       }
       else 
       {
          throw new QueueException("QueueException on dequeue:"
                              + "queue empty");
       } 
-   }  
+  }  
   
-   /** Retrieves the item at the front of a queue.
-       @return item at front of queue (do not remove)
-       @throws QueueException if the operation is impossible
-   */
-   public Object peek() throws QueueException 
-   {
+  /** Retrieves the item at the front of a queue.
+      @return item at front of queue (do not remove)
+      @throws QueueException if the operation is impossible
+  */
+  public Object peek() throws QueueException 
+  {
       if (!isEmpty()) 
       {
          // queue is not empty; retrieve front
@@ -98,6 +103,13 @@ public class QueueReferenceBased  implements QueueInterface
          throw new QueueException("QueueException on peek:"
                              + "queue empty");
       } 
-   }  
+  }  
+  
+  /** Returns the size of the queue
+   */
+  public int getSize () 
+  {
+      return size;
+  }
 
 } 
